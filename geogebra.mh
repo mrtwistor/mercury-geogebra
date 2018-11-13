@@ -1,0 +1,34 @@
+/*
+** Automatically generated from `geogebra.m'
+** by the Mercury compiler,
+** version 14.01.1, configured for x86_64-unknown-linux-gnu.
+** Do not edit.
+*/
+#ifndef GEOGEBRA_MH
+#define GEOGEBRA_MH
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef MR_HIGHLEVEL_CODE
+#include "mercury.h"
+#else
+  #ifndef MERCURY_HDR_EXCLUDE_IMP_H
+  #include "mercury_imp.h"
+  #endif
+#endif
+#ifdef MR_DEEP_PROFILING
+#include "mercury_deep_profiling.h"
+#endif
+
+#ifndef GEOGEBRA_DECL_GUARD
+#define GEOGEBRA_DECL_GUARD
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* GEOGEBRA_MH */
