@@ -5,11 +5,11 @@ demo: ggb
 
 #If Geogebra is not accessible from the command line, you can still build the app:
 ggb: xml
-	rm $(OUTPUT_FILENAME)
 	(cd ggb-applet/ && zip -r ../$(OUTPUT_FILENAME) ./)
 
 #Or just the XML source:
 xml:
+	rm $(OUTPUT_FILENAME)
 	mmc geogebra.m
 	./geogebra > ggb-applet/geogebra.xml
 
