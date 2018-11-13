@@ -13,6 +13,7 @@ xml:
 	mmc geogebra.m
 	./geogebra > ggb-applet/geogebra.xml
 
+
 clean:
 	rm geogebra *.d *.o *.c_date *.c *.mh \
 		file*.ggb ggb-applet/geogebra.xml
