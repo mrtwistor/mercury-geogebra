@@ -122,13 +122,22 @@ user_macros(S) :-
 :- type geogebraObjectReference == key.
 
 
-:- pred point(key::out,float::out,float::out) is nondet.
+:- pred point(key::out,
+	      float::out,
+	      float::out
+	     ) is nondet.
 point(_,_,_):-fail.
 
-:- pred line(key::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Point*/::out) is nondet.
+:- pred line(key::out,
+	     geogebraObjectReference/*Point*/::out,
+	     geogebraObjectReference/*Point*/::out
+	    ) is nondet.
 line(_,_,_):-fail.
 
-:- pred perpendicularLine(key::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Line*/::out) is nondet.
+:- pred perpendicularLine(key::out,
+			  geogebraObjectReference/*Point*/::out,
+			  geogebraObjectReference/*Line*/::out
+			 ) is nondet.
 perpendicularLine(_,_,_):-fail.
 
 :- pred conic( key::out,
@@ -145,7 +154,10 @@ conic(_,_,_,_,_):-fail.  %Not yet implemented
 	      ) is nondet.
 circle(_,_,_):-fail.
 
-:- pred intersect(list(key)::out,geogebraObjectReference::out,geogebraObjectReference::out) is nondet.
+:- pred intersect(list(key)::out,
+		  geogebraObjectReference::out,
+		  geogebraObjectReference::out
+		 ) is nondet.
 intersect(_,_,_):-fail.
 
 
@@ -160,10 +172,18 @@ var(Name,Context,Key) :-
 
 :- type geogebraDecl
    ---> pointFF(key,float,float)
-   ;    linePP(key,geogebraObjectReference/*Point*/,geogebraObjectReference/*Point*/)
-   ;    perpendicularLinePL(key,geogebraObjectReference/*Point*/,geogebraObjectReference/*Line*/)
-   ;    circlePP(key,geogebraObjectReference/*Point*/,geogebraObjectReference/*Point*/)
-   ;    intersectCC(list(key),geogebraObjectReference,geogebraObjectReference).
+   ;    linePP(key,
+	       geogebraObjectReference/*Point*/,
+	       geogebraObjectReference/*Point*/)
+   ;    perpendicularLinePL(key,
+			    geogebraObjectReference/*Point*/,
+			    geogebraObjectReference/*Line*/)
+   ;    circlePP(key,
+		 geogebraObjectReference/*Point*/,
+		 geogebraObjectReference/*Point*/)
+   ;    intersectCC(list(key),
+		    geogebraObjectReference,
+		    geogebraObjectReference).
 %   ;    circleSSS(string,string,string)
 %   ;    conicSSSSS(string,string,string,string,string,string)
 
@@ -203,7 +223,9 @@ geogebraCommands(Commands0) :-
 				    PerpendicularLines,
 				    Intersections, MACROS ]),
     solutions_set(pred(Commands::out) is nondet :-
-		      topological_sort(GeogebraCommands, geogebraCmp, Commands)
+		      topological_sort(GeogebraCommands,
+				       geogebraCmp,
+				       Commands)
 		 , SortedCommandsSet),
     (
 	is_empty(SortedCommandsSet) -> Commands0=[]
@@ -297,7 +319,10 @@ printGeogebra(intersectCC(Labels,A,B),!IO):-
 min_element(_,_,_):-fail.
 min_element(S,P,X):-
     member(X,S),
-    filter((pred(Y::in) is semidet :- P(Y,X)),S,LowerThanX),
+    filter( pred(Y::in) is semidet :- P(Y,X)
+	  , S
+	  , LowerThanX
+	  ),
     is_empty(LowerThanX).
 
 
