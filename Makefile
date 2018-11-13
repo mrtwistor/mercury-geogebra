@@ -8,6 +8,6 @@ geogebra:
 	geogebra $(OUTPUT_FILENAME)
 
 clean:
-	rm geogebra *.d *.o *.c_date *.c \
+	rm geogebra *.d *.o *.c_date *.c *.mh \
 		file*.ggb ggb-applet/geogebra.xml
 
