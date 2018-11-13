@@ -131,10 +131,18 @@ line(_,_,_):-fail.
 :- pred perpendicularLine(key::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Line*/::out) is nondet.
 perpendicularLine(_,_,_):-fail.
 
-:- pred conic(key::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Point*/::out) is nondet.
-conic(_,_,_,_,_):-fail.
+:- pred conic( key::out,
+	       geogebraObjectReference/*Point*/::out
+	       ,geogebraObjectReference/*Point*/::out,
+	       geogebraObjectReference/*Point*/::out,
+	       geogebraObjectReference/*Point*/::out
+	     ) is nondet.
+conic(_,_,_,_,_):-fail.  %Not yet implemented
 
-:- pred circle(key::out,geogebraObjectReference/*Point*/::out,geogebraObjectReference/*Point*/::out) is nondet.
+:- pred circle( key::out,
+		geogebraObjectReference/*Point*/::out,
+		geogebraObjectReference/*Point*/::out
+	      ) is nondet.
 circle(_,_,_):-fail.
 
 :- pred intersect(list(key)::out,geogebraObjectReference::out,geogebraObjectReference::out) is nondet.
@@ -159,7 +167,10 @@ var(Name,Context,Key) :-
 %   ;    circleSSS(string,string,string)
 %   ;    conicSSSSS(string,string,string,string,string,string)
 
-:- pred geogebraKeys(geogebraDecl::in,string::out,list(string)::out) is nondet.
+:- pred geogebraKeys(geogebraDecl::in,
+		     string      ::out,
+		     list(string)::out
+		    ) is nondet.
 
 geogebraKeys(X,Key,Values) :-
     ( X = pointFF(Key,_,_), Values=[]
@@ -172,15 +183,28 @@ geogebraKeys(X,Key,Values) :-
 
 :- pred geogebraCommands(list(geogebraDecl)::out) is det.
 geogebraCommands(Commands0) :-
-    solutions_set(pred(pointFF(A,X,Y)::out) is nondet :- point(A,X,Y),Points),
-    solutions_set(pred(linePP(L,A,B)::out) is nondet :- line(L,A,B),Lines),
-    solutions_set(pred(circlePP(C,A,B)::out) is nondet :- circle(C,A,B),Circles),
-    solutions_set(pred(perpendicularLinePL(A,X,Y)::out) is nondet :-perpendicularLine(A,X,Y),PerpendicularLines),
-    solutions_set(pred(intersectCC(L,X,Y)::out) is nondet :-intersect(L,X,Y),Intersections),
+    solutions_set(pred(pointFF(A,X,Y)::out) is nondet :-
+		      point(A,X,Y)
+		 , Points),
+    solutions_set(pred(linePP(L,A,B)::out) is nondet :-
+		      line(L,A,B)
+		 , Lines),
+    solutions_set(pred(circlePP(C,A,B)::out) is nondet :- circle(C,A,B)
+		 , Circles),
+    solutions_set(pred(perpendicularLinePL(A,X,Y)::out) is nondet :-
+		      perpendicularLine(A,X,Y)
+		 , PerpendicularLines),
+    solutions_set(pred(intersectCC(L,X,Y)::out) is nondet :-
+		      intersect(L,X,Y)
+		 , Intersections),
     solutions(user_macros,MACROSList),
     MACROS=union_list(MACROSList),
-    GeogebraCommands = union_list([Points,Lines,Circles,PerpendicularLines,Intersections,MACROS]),
-    solutions_set(pred(Commands::out) is nondet :- topological_sort(GeogebraCommands, geogebraCmp, Commands),SortedCommandsSet),
+    GeogebraCommands = union_list([ Points,Lines,Circles,
+				    PerpendicularLines,
+				    Intersections, MACROS ]),
+    solutions_set(pred(Commands::out) is nondet :-
+		      topological_sort(GeogebraCommands, geogebraCmp, Commands)
+		 , SortedCommandsSet),
     (
 	is_empty(SortedCommandsSet) -> Commands0=[]
     ;	remove_least(Commands0,SortedCommandsSet,_)
@@ -188,7 +212,10 @@ geogebraCommands(Commands0) :-
 
 
 
-:- pred printGeogebra(geogebraDecl::in,io::di,io::uo) is det.
+:- pred printGeogebra(geogebraDecl::in,
+		      io          ::di,
+		      io          ::uo
+		     ) is det.
 
 printGeogebra(pointFF(A,X,Y),!IO):-
     write_strings(["
@@ -223,7 +250,10 @@ printGeogebra(perpendicularLinePL(Label,A,B),!IO):-
 	<output a0=\"",Label,"\"/>
 </command>"],!IO).
 
-:- pred intercalate(list(string)::in,list(string)::in,list(string)::out) is det.
+:- pred intercalate( list(string)::in,
+		     list(string)::in,
+		     list(string)::out
+		   ) is det.
 intercalate(X,Y,Z) :-
     ( X is [] -> Y is Z
     ; Y is [] -> Y is Z
@@ -231,7 +261,14 @@ intercalate(X,Y,Z) :-
     ; error("Impossible.")
     ).
 
-:- pred intercalate_indexed(list(string)::in,string::in,string::in,string::in,int::in,list(string)::out) is det.
+:- pred intercalate_indexed( list(string)::in,
+			     string      ::in,
+			     string      ::in,
+			     string      ::in,
+			     int         ::in,
+			     list(string)::out
+			   ) is det.
+
 intercalate_indexed(X,Y0,Y1,Y2,N,Z) :-
     ( X is [] -> [] is Z
     ; X is [Hx|Tx],
