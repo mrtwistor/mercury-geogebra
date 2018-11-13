@@ -9,7 +9,7 @@
 %  although support for other primitives is relatively straightforward
 %  to add (feature requests?)
 
-
+:- implementation.
 
 %%----------------------User declarations-----------------------%%
 
