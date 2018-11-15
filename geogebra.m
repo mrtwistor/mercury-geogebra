@@ -3,11 +3,17 @@
 %  This is a proof-of-concept of an intuitive API between the 
 %  Mercury computer language (https://www.mercurylang.org) and
 %  an interactive geometrical modeling system such as Geogebra.
-
-%  We currently support geogebra primitives:
+%
+%  More information on the general purpose can be found in the
+%  documentation and license accompanying the archive.
+%
+%  We currently export geogebra primitives:
 %  point, line, perpendicularLine, circle, intersect
 %  although support for other primitives is relatively straightforward
-%  to add (feature requests?)
+%  to add (feature requests?  See TODO.md)
+%
+%  Copyright, Jonathan Holland, PhD    2018
+%  Licensed under the terms of the GPL v3 (see LICENSE.md).
 
 :- implementation.
 
@@ -54,9 +60,10 @@ line("AB","A","B").
 % The only example currently written constructs the bisector
 % of two points using a ruler-and-compass construction:
 
-%bisectorMACRO("L1","A","B").
+bisectorMACRO("b1","A","B").
 
-bisect_recursiveMACRO("L2",8,"A","B").
+%If the user is confident in the build environment, then try:
+%bisect_recursiveMACRO("b2",8,"A","B").
 
 
 
