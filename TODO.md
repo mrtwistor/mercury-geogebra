@@ -43,5 +43,3 @@ setColor("AB","Blue").
 setColor("B",colorOf("AB")).
 ````
 should result in an object `AB` created, with values for all parameters specified by the system, except those generating an exception - e.g., `DivByZero`.  The remaining attributes and methods are still callable, and so the point ``B`` should be colored blue.  The line `AB` should fail to display, as the exception `DivByZero` propagates.
-
-Objects resulting in exceptions need to be dynamically reinitialized whenever a query is made by a client.
