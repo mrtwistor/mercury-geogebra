@@ -26,3 +26,7 @@ that file for examples.
 
 ## More information on aims
 See TODO.md
+
+## License and copyright
+Copyright 2018, Jonathan Holland, PhD
+Licensed under the terms of the GPL v3 (see LICENSE)
