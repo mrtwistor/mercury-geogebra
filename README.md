@@ -1,5 +1,5 @@
 # mercury-geogebra
-A set of Geogebra bindings for the [Mercury language](https://www.mercurylang.org)
+A set of [Geogebra](https://geogebra.org) bindings for the [Mercury language](https://www.mercurylang.org)
 
 ## Installation
 This requires a working installation of the Mercury language,
