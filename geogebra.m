@@ -54,8 +54,9 @@ line("AB","A","B").
 % The only example currently written constructs the bisector
 % of two points using a ruler-and-compass construction:
 
-bisectorMACRO("L","A","B").
+%bisectorMACRO("L1","A","B").
 
+bisect_recursiveMACRO("L2",8,"A","B").
 
 
 
@@ -65,12 +66,47 @@ bisectorMACRO("L","A","B").
 
 %%-----------Advanced usage: MACROS and patterns---------%%
 
+
 %% MACRO interface.
 :- pred bisectorMACRO(key::out,
 		      geogebraObjectReference/*Point*/::out,
 		      geogebraObjectReference/*Point*/::out)
    is nondet.
-bisectorMACRO(_,_,_):-fail.
+bisectorMACRO(_,_,_) :- fail.
+
+:- pred bisect_recursiveMACRO(key::out, int::out,
+	      geogebraObjectReference/*Point*/::out,
+	      geogebraObjectReference/*Point*/::out)
+   is nondet.
+bisect_recursiveMACRO(_,_,_,_) :- fail.
+
+
+:- pred bisector(key::in,
+	      geogebraObjectReference/*Point*/::in,
+	      geogebraObjectReference/*Point*/::in,
+	      set(geogebraDecl)::out)
+   is det.
+
+
+:- pred bisect_recursive(key::in, int::in,
+	      geogebraObjectReference/*Point*/::in,
+	      geogebraObjectReference/*Point*/::in,
+	      set(geogebraDecl)::out)
+   is nondet.
+
+:- pred user_macros(set(geogebraDecl)::out) is nondet.
+user_macros(S) :-
+    (
+	bisectorMACRO(L,A,B) -> bisector(L,A,B,S)
+    ;  fail
+    ).
+
+user_macros(S) :-
+    (
+       %Other definitions:
+       bisect_recursiveMACRO(K,N,A,B) -> bisect_recursive(K,N,A,B,S)
+    ;  fail
+    ).
 
 
 %% MACRO implementation.
@@ -80,10 +116,31 @@ bisectorMACRO(_,_,_):-fail.
 %  linePP(line,point,point), intersectCC([list of points],curve,curve),
 %  that support a declarative style as shown in the example below:
 
-:- pred user_macros(set(geogebraDecl)::out) is nondet.
-user_macros(S) :-
-    (
-	bisectorMACRO(L,A,B) ->
+bisect_recursive(K, N, A, B, S) :-
+    ( N < 1 -> S is set.from_list([])
+    ; var("M",K,M),
+      var("AB",K,AB),
+      var("G",K,G),
+      var("L",K,L),
+      var("R",K,R),
+      bisect_recursive(L, N-1, A, M, S1),
+      bisect_recursive(R, N-1, M, B, S2),
+      bisector(G,A,B,S3),
+      S = set.union_list(
+		  [S1,
+		   S2,
+		   S3,
+		   set.from_list(
+			   [
+			       linePP(AB,A,B),
+			       intersectCC([M],AB,G)
+			   ])
+		  ]
+	      )
+    ).
+
+
+bisector(L,A,B,S) :-
 	  var("X",L,X),
 	  var("Y",L,Y),
 	  var("P",L,P),
@@ -93,12 +150,11 @@ user_macros(S) :-
 	              circlePP(Y,B,A),
 		      intersectCC([P,Q],X,Y),
 		      linePP(L,P,Q)]
-		)
-       %Other definitions:
-    ;  fail
-    ;  fail
-    ;  fail  %etc
-    ).
+		).
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%---------------END of user-modifiable section--------------%%
@@ -230,7 +286,7 @@ geogebraCommands(Commands0) :-
     (
 	is_empty(SortedCommandsSet) -> Commands0=[]
     ;	remove_least(Commands0,SortedCommandsSet,_)
-    ;   error("An impossible error.")).
+    ;   error("Impossible.")).
 
 
 
@@ -341,7 +397,8 @@ topological_sort(S,P,Ac,L) :-
 	 ,  Solutions
 	),
 	(
-	    is_empty(Solutions) -> error("No solution detected.\n")
+	    is_empty(Solutions) ->
+	      error("No solution detected.\n")
 	; delete_list(Solutions,S,Sprime),
 	  append(Solutions,Ac,AcPrime),
 	  topological_sort(Sprime,P,AcPrime,L)
