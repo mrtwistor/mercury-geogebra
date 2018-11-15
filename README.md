@@ -23,3 +23,6 @@ builds the package and launches Geogebra on it.
 ## Usage
 Edit the User section of the file `geogebra.m`, and see
 that file for examples.
+
+## More information on aims
+See TODO.md
