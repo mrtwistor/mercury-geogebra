@@ -24,7 +24,7 @@ A client-to-server query will have the form such as a declaration:
 ````
 line("AB","A","B").
 ````
-or other more complicated examples as seen in geogebra.m.  Ultimately, stateful qualitiest of objects shall be managed with queries such as:
+or other more complicated examples as seen in geogebra.m.  Ultimately, stateful qualities of objects shall be managed with queries such as:
 ````
 setColor("X","Blue").
 setColor("Y",colorOf("X")).   %Not actual code
