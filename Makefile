@@ -10,30 +10,30 @@ ggb: xml
 #Or just the XML source:
 xml:
 	rm $(OUTPUT_FILENAME)
-	mmc geogebra.m
-	./geogebra > ggb-applet/geogebra.xml
+	mmc mmcggb.m
+	./mmcggb > ggb-applet/geogebra.xml
 
 
 #Java/Erlang/Csharp targets (experimental):
 java:
 	rm $(OUTPUT_FILENAME)
-	mmc --make --java --gc automatic geogebra
+	mmc --make --java --gc automatic mmcggb
 
 
 #Erlang compilation in Mercury is currently broken, so YMMV.
 erlang:
 	rm $(OUTPUT_FILENAME)
-	mmc --make --erlang --gc automatic geogebra
+	mmc --make --erlang --gc automatic mmcggb
 
 csharp:
 	rm $(OUTPUT_FILENAME)
-	mmc --make --csharp --gc automatic geogebra
+	mmc --make --csharp --gc automatic mmcggb
 
 
 .PHONY: clean
 clean:
 	-rm -rf Mercury
-	-rm -f geogebra *.d *.o *.c_date *.c *.mh *.jar \
+	-rm -f mmcggb *.d *.o *.c_date *.c *.mh *.jar \
 		*.erl *.erl_date *.java_date *.exe *.hrl \
 		*.err *.dump file*.ggb ggb-applet/geogebra.xml 
 

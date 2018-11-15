@@ -1,4 +1,4 @@
-:- module geogebra.
+:- module mmcggb.
 
 %  This is a proof-of-concept of an intuitive API between the 
 %  Mercury computer language (https://www.mercurylang.org) and
