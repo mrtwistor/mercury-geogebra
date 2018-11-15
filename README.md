@@ -8,7 +8,9 @@ line.
 
 To build using the Makefile requires GNU make.  The
 package can be compiled with:
+````
 make ggb
+````
 This works whether there is a working Geogebra
 installation or not, but requires ``zip`` to be on the command 
 line.  If the `geogebra` executable is also on the 
